@@ -12,10 +12,10 @@ namespace Capstone.Classes
          */
 
         //running balance of money fed into the machine
-        private decimal balance { get; set; }
+        private decimal balance { get; set; } = 0;
 
         //Complete list of Items to vend and the associated key. Key might need to be a string depending on input file. (ex: A3 instead of just 3)
-        public Dictionary<int, VendItem> VendItemInventory { get; set; } = new Dictionary<int, VendItem>();
+        public Dictionary<string, VendItem> VendItemInventory { get; set; } = new Dictionary<string, VendItem>();
 
         //Just a running int count of the amount of keys inside of the Vending Machine dictionary
         public int VendItemCount { get { return VendItemInventory.Count; } }

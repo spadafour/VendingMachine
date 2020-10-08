@@ -1,0 +1,81 @@
+Text File for input looks like this:
+title, quantity, price, outputText
+
+milk, 5, 5.50, "Glug"
+egg, 7, 7.20, "Cluck"
+cheese, 32, 7.33, "Munch"
+
+
+static Class Reader/Stocker
+In Method StockNewMachine():
+{
+creates a new VendingMachine
+int slotNumber = 1;
+	while {!endOfstream}
+	{
+	generate "VendItem" objects and add to VendingMachine obj
+	Creates... ????????????????
+	VendItem milk
+	VendItem egg
+	......
+	(sr.line (VendingMachine.Add (slotNumber, new VendItem) )
+	slotnumber++;
+	}
+}
+
+
+
+static Class AuditLogger
+Queue<string> AuditLog
+
+Add to AuditLog once method is called
+LogMoneyIn() -- Date, Time, FEED MONEY, How much money in, VendingMachine.Balance
+LogItemVended() -- Date, Time, ProductVended, ProductSlot, BalanceBefore, BalanceAfter
+LogChangeMade() -- Date, Time, GIVECHANGE, BalanceBefore, BalanceAfter(Should be 0)
+
+Once you are ready to exit program, print to file:
+WriteLogToAuditFile() -- Writes each string in queue to external text file
+
+
+
+Class VendItem
+Name { get; set; }
+Quantity { get; set; } = 0
+Price  { get; set; }
+OutputText { get; set; }
+
+
+
+Class VendingMachine, IBalance
+private Balance { get; set; }
+Number of slots { get count of dictionary; }
+Dictionary <int, VendItem> = 10 long;
+<int 1, VendItem milk>
+<int 2, VendItem egg>
+...
+
+DisplayVendItemInfo() -- Print Individual Prod info
+DisplayVendItemList() -- Print List of Stocked Products info (*with quantity left*)
+
+FeedMoney() -- Adds to VendingMachine Balance
+	subtracts from Customer Balance through Customer.PutMoneyIn()
+	AuditLogger.LogMoneyIn()
+	
+VendSelectedItem() -- Vend item by quantity - 1; balance -= vendItem.Cost, Print itemName, Cost, balance, message
+	AuditLogger.LogItemVended()
+
+MakeChange() -- calculates change into int quarter, dime, nickel, penny
+	returns change to customer through Customer.GetChange(quarter, dime, nickel, penny)
+	**Consider Making a coin class****
+	LogChangeMade()
+
+
+
+
+
+static Customer Class, IBalance
+private CustomerBalance { get; set; } = 0
+(Coin Class??) int quarter, int dime, int nickel, int penny
+
+PutMoneyIn(int moneyToPutIn) -- Subtracts that number from balance
+GetChangeBack(quarter, dime, nickel, penny)

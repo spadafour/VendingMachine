@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.PortableExecutable;
@@ -8,37 +9,43 @@ namespace Capstone.Classes.ReadersAndLoggers
 {
     public class Stocker
     {
-        /*
-         * Methods
-         */
-        public void StockNewMachine()
+        public VendingMachine StockNewMachine()
         {
             VendingMachine vendingMachine = new VendingMachine();
+            Queue<string[]> itemQueue = new Queue<string[]>();
             string directory = Environment.CurrentDirectory;
             string file = "vendingmachine.csv";
             string fullPath = Path.Combine(directory, file);
-            
-            using (StreamReader sr = new StreamReader(fullPath))
+
+            try
             {
-                while (!sr.EndOfStream)
+                using (StreamReader sr = new StreamReader(fullPath))
                 {
-                    string readLine = sr.ReadLine();
-                    string[] itemInfo = readLine.Split("|");
-                    string vendItemName = itemInfo[0];
-                    VendItem vendItem = new VendItem(); //consider way to iterate variable name
-                    vendItem.ItemNumber = itemInfo[0];
-                    vendItem.Name = itemInfo[1];
-                    vendItem.Price = decimal.Parse(itemInfo[2]);
-                    vendItem.Type = itemInfo[3];
-                    vendItem.Quantity = 5;
+                    while (!sr.EndOfStream)
+                    {
+                        string readLine = sr.ReadLine();
+                        string[] itemInfo = readLine.Split("|");
+                        itemQueue.Enqueue(itemInfo);
+                    }
                 }
             }
-        }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unable to read file");
+                Console.WriteLine(e.Message);
+            }
 
-        //reads from input text, creates a new VendingMachine
-        //public VendingMachine StockNewMachine()
-        //{
-        //    return VendingMachine; //TODO Add method
-        //}
+            foreach (string[] item in itemQueue)
+            {
+                string[] itemInfoMinusSlot = new string[item.Length - 1];
+                for (int i = 0; i < item.Length - 2; i++)
+                {
+                    itemInfoMinusSlot[i] = item[i + 1];
+                }
+                vendingMachine.VendItemInventory.Add(item[0], itemInfoMinusSlot);
+            }
+
+            return vendingMachine;
+        }
     }
 }

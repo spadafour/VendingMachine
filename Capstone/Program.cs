@@ -1,4 +1,5 @@
 ﻿using Capstone.Classes;
+using Capstone.Classes.Menus;
 using Capstone.Classes.ReadersAndLoggers;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,8 @@ namespace Capstone
     {
         static void Main(string[] args)
         {
-            Stocker stocker = new Stocker();
-            VendingMachine vendingMachine = stocker.StockNewMachine();
-            
+            UI ui = new UI();
+            ui.UIStart();
 
 
 

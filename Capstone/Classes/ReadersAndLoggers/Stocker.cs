@@ -11,7 +11,7 @@ namespace Capstone.Classes.ReadersAndLoggers
     public class Stocker
     {
         public int StartingStock { get; set; } = 5;
-        public VendingMachine StockNewMachine()
+        public VendingMachine GenerateNewVendingMachine()
         {
             
             VendingMachine vendingMachine = new VendingMachine();

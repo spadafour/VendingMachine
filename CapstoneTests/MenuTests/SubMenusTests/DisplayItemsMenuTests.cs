@@ -8,12 +8,6 @@ namespace CapstoneTests.MenuTests.SubMenusTests
 {
     [TestClass]
     public class DisplayItemsMenuTests
-    {
-        [TestMethod]
-        public void GoToDisplayItemsMenu()
-        {
-
-
-        }
+    { 
     }
 }

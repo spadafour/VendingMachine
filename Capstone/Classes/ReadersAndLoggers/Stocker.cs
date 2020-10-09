@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Capstone.Classes.VendItems;
+using Capstone.Classes.VendItems.VendItemTypes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -53,7 +55,24 @@ namespace Capstone.Classes.ReadersAndLoggers
             //Add the queued items to the Dictionary in VendingMachine as Key. Use int Starting Stock as Value
             foreach (string[] item in itemQueue)
             {
-                vendingMachine.AddItemToInventory(item, StartingStock);
+                switch (item[3].ToLower())
+                {
+                    case "chip":
+                        Chip itemChip = new Chip(item[0], item[1], decimal.Parse(item[2]));
+                        vendingMachine.AddItemToInventory(itemChip, StartingStock); break;
+                    case "candy":
+                        Candy itemCandy = new Candy(item[0], item[1], decimal.Parse(item[2]));
+                        vendingMachine.AddItemToInventory(itemCandy, StartingStock); break;
+                    case "drink":
+                        Drink itemDrink = new Drink(item[0], item[1], decimal.Parse(item[2]));
+                        vendingMachine.AddItemToInventory(itemDrink, StartingStock); break;
+                    case "gum":
+                        Gum itemGum = new Gum(item[0], item[1], decimal.Parse(item[2]));
+                        vendingMachine.AddItemToInventory(itemGum, StartingStock); break;
+                    default:
+                        Console.WriteLine("Unable to Add Item To Vend Inventory"); break;
+                }
+                
             }
 
             //Output is the newly-generated Vending Machine Object

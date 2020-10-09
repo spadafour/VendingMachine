@@ -15,10 +15,13 @@ namespace Capstone.Classes.Menus.SubMenus
             bool isOption = false;
             do
             {
+                Console.WriteLine("Purchase Menu");
                 Console.WriteLine("(1) Feed Money");
                 Console.WriteLine("(2) Select Product");
                 Console.WriteLine("(3) Finish Transaction");
+                Console.Write("Selection: ");
                 Char userSelection = Console.ReadKey().KeyChar;
+                
                 Console.WriteLine(System.Environment.NewLine);
                 switch (userSelection)
                 {
@@ -72,6 +75,7 @@ namespace Capstone.Classes.Menus.SubMenus
                         Console.WriteLine("(1) Display Vending Machine Items");
                         Console.WriteLine("(2) Purchase");
                         Console.WriteLine("(3) Finish Transaction");
+                        Console.Write("Selection: ");
                         userSelection = Console.ReadKey().KeyChar;
                         Console.WriteLine(System.Environment.NewLine);
                         isOption = false; break;

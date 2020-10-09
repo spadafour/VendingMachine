@@ -9,7 +9,7 @@ namespace Capstone.Classes.Menus.SubMenus
 {
     public class PurchaseMenu
     {                //changed return type to for pushing purposes
-        public static VendingMachine GoToPurchaseMenu(VendingMachine vendingMachine)
+        public static bool GoToPurchaseMenu(VendingMachine vendingMachine)
         {
             Console.WriteLine("(1) Feed Money");
             Console.WriteLine("(2) Select Product");
@@ -62,7 +62,7 @@ namespace Capstone.Classes.Menus.SubMenus
                         break;
 
                     case '3': //Access Finish Transaction Menu
-                        FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine.GetBalance());
+                        FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine);
                         userSelection = '0'; isOption = true; break;
                     default:
                         Console.WriteLine("(1) Display Vending Machine Items");
@@ -75,7 +75,7 @@ namespace Capstone.Classes.Menus.SubMenus
             }
             while (!isOption);
 
-            return vendingMachine;
+            return true;
         }
     }
 }

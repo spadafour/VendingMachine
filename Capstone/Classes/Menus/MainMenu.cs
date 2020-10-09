@@ -26,7 +26,7 @@ namespace Capstone.Classes.Menus
                         PurchaseMenu.GoToPurchaseMenu(vendingMachine);
                         userSelection = '0'; isOption = false; break;
                     case '3': //Access Finish Transaction Menu
-                        FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine.GetBalance());
+                        FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine);
                         userSelection = '0'; isOption = true; break;
                     default:
                         Console.WriteLine("(1) Display Vending Machine Items");

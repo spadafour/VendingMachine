@@ -6,8 +6,9 @@ namespace Capstone.Classes.Menus.SubMenus
 {
     public class FinishTransactionMenu
     {
-        public static bool GoToFinishTransactionMenu(decimal changeDue)
+        public static bool GoToFinishTransactionMenu(VendingMachine vendingMachine)
         {
+            
             return true;
         }
     }

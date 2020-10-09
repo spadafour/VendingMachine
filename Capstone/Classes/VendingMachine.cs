@@ -41,33 +41,32 @@ namespace Capstone.Classes
 
         public void VendSelectedItem(string itemKey) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
         {
-
-            itemKey.ToLower();
+            string lowerCase = itemKey.ToLower();
             bool secondCheckBool = true;
-            if (itemKey.Equals("x"))
+            if (lowerCase.Equals("x"))
             {
                 secondCheckBool = false;
             }
             Dictionary<VendItem, int> dummyDictionary = new Dictionary<VendItem, int>(VendItemInventory);
             int counter = 0;
             while (secondCheckBool)
-            {
+            { 
                 foreach (KeyValuePair<VendItem, int> kvp in dummyDictionary)
                 {
                     counter++;
-                    
-                    if (kvp.Key.SlotNumber.ToLower() == itemKey)
+                    if (kvp.Key.SlotNumber.ToLower() == itemKey.ToLower())
                     {
+                        counter--;
                         if (Balance >= kvp.Key.Price)
                         {
                             Console.WriteLine($"You have chosen {kvp.Key.ItemName}, are you sure you want to buy this item?");
                             Console.Write("type Y to confirm purchase, or N to stop purchase. Any other key will take you back to the purchase menu ");
                             Char confirmPurchase = Console.ReadKey().KeyChar;
-                            
+
                             if (confirmPurchase == 'Y' || confirmPurchase == 'y')
                             {
                                 if (kvp.Value > 0)
-                                {
+                                {  
                                     Balance -= kvp.Key.Price;
                                     VendItemInventory[kvp.Key] = kvp.Value - 1;
                                     Console.WriteLine(kvp.Key.Message);

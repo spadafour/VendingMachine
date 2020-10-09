@@ -11,7 +11,7 @@ namespace Capstone.Classes.Menus.SubMenus
         {
             foreach (KeyValuePair <VendItem, int> item in vendItems)
             {
-                string printItemLine = $"{item.Key.SlotNumber}. {item.Key.ItemName} - {item.Key.Price:C}";
+                string printItemLine = $"{item.Key.SlotNumber}. {item.Key.ItemName} - {item.Key.Price:C} - {vendItems[item.Key]}";
                 if (item.Value == 0)
                 {
                     Console.WriteLine(printItemLine + " - SOLD OUT");

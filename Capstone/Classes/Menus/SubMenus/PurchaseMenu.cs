@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 
@@ -8,7 +9,7 @@ namespace Capstone.Classes.Menus.SubMenus
 {
     public class PurchaseMenu
     {                //changed return type to for pushing purposes
-        public static void GoToPurchaseMenu(VendingMachine vendingMachine)
+        public static VendingMachine GoToPurchaseMenu(VendingMachine vendingMachine)
         {
             Console.WriteLine("(1) Feed Money");
             Console.WriteLine("(2) Select Product");
@@ -73,6 +74,8 @@ namespace Capstone.Classes.Menus.SubMenus
                 }
             }
             while (!isOption);
+
+            return vendingMachine;
         }
     }
 }

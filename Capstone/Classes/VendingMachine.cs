@@ -1,8 +1,10 @@
 ﻿using Capstone.Classes.Menus.SubMenus;
 using Capstone.Classes.VendItems;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
@@ -11,80 +13,108 @@ namespace Capstone.Classes
     public class VendingMachine
     {
         //Parameters
-        private decimal Balance { get; set; } = 0;
+        public decimal Balance { get; private set; } = 0;
         private Dictionary<VendItem, int> VendItemInventory { get; set; } = new Dictionary<VendItem, int>();
-        public int VendItemCount { get { return VendItemInventory.Count; } }
 
-        
+
         //Methods
-        public decimal GetBalance()
+        public decimal GetBalance() //Returns Balance as decimal
         {
             return Balance;
         }
 
-        public bool AddItemToInventory(VendItem item, int startingStock)
+        public bool AddItemToInventory(VendItem item, int startingStock) //Adds VendItem object, startingStock int to VendItemInventory dictionary
         {
             VendItemInventory.Add(item, startingStock);
             return true;
         }
 
-        public Dictionary<VendItem, int> GetVendItemInventory()
+        public Dictionary<VendItem, int> GetVendItemInventory() //Returns VendItemInventory dictionary
         {
             return VendItemInventory;
         }
 
-   
-        public void FeedMoney(decimal moneyFed) //Adds to VendingMachine Balance, sutbtract from Customer.Balance, Log Money with AuditLogger (maybe return string with new balance??)
+        public void FeedMoney(decimal moneyFed) //Adds to VendingMachine Balance
         {
             Balance += moneyFed;
         }
-        
-        public bool VendSelectedItem(string itemKey) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
-        {/*
-                foreach (KeyValuePair<VendItem, int> kvp in VendItemInventory)
-                {
-                    try
-                    {
-                        bool secondCheckBool = true;
-                        while (secondCheckBool = true)
-                        {
-                            if (kvp.Key.SlotNumber == itemKey)
-                            {
-                                if (Balance > kvp.Key.Price)
-                                {
-                                    Console.WriteLine($"You have chosen {kvp.Key.ItemName}, are you sure you want to buy this item?");
-                                    Console.WriteLine("type Y to confirm purchase, or N to stop purchase);
-                                    Char feedMoneyYorN = Console.ReadKey().KeyChar;
-                                    if (feedMoneyYorN == 'Y' || feedMoneyYorN == 'y')
-                                    {
-                                        Console.WriteLine("Please f")
-                                        string moneyFedToBeCast = Console.ReadLine();
-                                        //will complete after refactoring FeedMoney
-                                    }
 
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Sorry, not enough money has been fed into the machine, please feed more or choose another item");
-                                    PurchaseMenu.GoToPurchaseMenu(vendingMachine);
-                                }
+        public void VendSelectedItem(string itemKey) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
+        {
+
+            itemKey.ToLower();
+            bool secondCheckBool = true;
+            if (itemKey.Equals("x"))
+            {
+                secondCheckBool = false;
+            }
+            Dictionary<VendItem, int> dummyDictionary = new Dictionary<VendItem, int>(VendItemInventory);
+            while (secondCheckBool)
+            {
+                foreach (KeyValuePair<VendItem, int> kvp in dummyDictionary)
+                {
+                    if (kvp.Key.SlotNumber.ToLower() == itemKey)
+                    {
+                        if (Balance >= kvp.Key.Price)
+                        {
+                            Console.WriteLine($"You have chosen {kvp.Key.ItemName}, are you sure you want to buy this item?");
+                            Console.Write("type Y to confirm purchase, or N to stop purchase. Any other key will take you back to the purchase menu ");
+                            Char confirmPurchase = Console.ReadKey().KeyChar;
+                            
+                            if (confirmPurchase == 'Y' || confirmPurchase == 'y')
+                            {
+                                Balance -= kvp.Key.Price;
+                                VendItemInventory[kvp.Key] = kvp.Value - 1;
+                                Console.WriteLine(kvp.Key.Message);
+                                Console.WriteLine();
+                                secondCheckBool = false;
+                            }
+                            else if (confirmPurchase == 'N' || confirmPurchase == 'n')
+                            {
+                                Console.WriteLine("You have successfully canceled your purchase");
+                                secondCheckBool = false;
                             }
                             else
                             {
-
+                                Console.WriteLine("You have entered a key other than y or n and are now being returned to the purchase menu");
+                                secondCheckBool = false;
                             }
                         }
-                        
-                        itemCheckBool = false;
+                        else
+                        {
+                            Console.WriteLine("Sorry, not enough money has been fed into the machine, please feed more or choose another item");
+                            secondCheckBool = false;
+                        }
                     }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("The item key entered does not correspond to an existing item in the vending machine, please re-enter");
-                        itemKey = Console.ReadLine();
-                        itemCheckBool = true;
-                    }
-        */
-            return true; //TODO Add method
-        } 
+                }
+                secondCheckBool = false;
+            }
+            
+        }
+        public Dictionary<string, int> MakeChange() //Returns changePurse dictionary and Zeroes balance
+
+        {
+            Dictionary<string, int> changePurse = new Dictionary<string, int> { { "Quarters", 0 }, { "Dimes", 0 }, { "Nickels", 0 }, { "Pennies", 0 } };
+            int currentCentBalance = (int)(Balance * 100);
+            if (currentCentBalance >= 25)
+            {
+                changePurse["Quarters"] = currentCentBalance / 25;
+                currentCentBalance %= 25;
+            }
+            if (currentCentBalance >= 10)
+            {
+                changePurse["Dimes"] = currentCentBalance / 10;
+                currentCentBalance %= 10;
+            }
+            if (currentCentBalance >=5)
+            {
+                changePurse["Nickels"] = currentCentBalance / 5;
+                currentCentBalance %= 5;
+            }
+            changePurse["Pennies"] = currentCentBalance;
+            currentCentBalance -= currentCentBalance;
+            Balance = currentCentBalance;
+            return changePurse;
+        }
     } 
 }

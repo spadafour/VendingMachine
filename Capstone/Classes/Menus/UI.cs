@@ -13,7 +13,7 @@ namespace Capstone.Classes.Menus
             Stocker stocker = new Stocker();
             VendingMachine = stocker.GenerateNewVendingMachine();
 
-            MainMenu.DisplayMainMenu(VendingMachine);
+            MainMenu.GoToMainMenu(VendingMachine);
 
 
         }

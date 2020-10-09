@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
@@ -7,30 +8,20 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-        /*
-         * Parameters 
-         */
-        private decimal balance { get; set; } = 0;
-        public Dictionary<string, string[]> VendItemInventory { get; set; } = new Dictionary<string, string[]>();
+        //Parameters
+        private decimal Balance { get; set; } = 0;
+        private Dictionary<string[], int> VendItemInventory { get; set; } = new Dictionary<string[], int>();
         public int VendItemCount { get { return VendItemInventory.Count; } }
-
-
-        /*
-         * Methods 
-         */
-
-        //Display VendItem info using a given key
-        public string DisplayVendItemInfo(int vendKey)
+        public Dictionary<string, string> VendMessage = new Dictionary<string, string>()
         {
-            return "Hello World"; //TODO Add method
-        }
+            { "Chip", "Crunch Crunch, Yum!" },
+            { "Candy", "Munch Munch, Yum!" },
+            { "Drink", "Glug Glug, Yum!" },
+            { "Gum", "Chew Chew, Yum!" }
+        };
 
-        //Display LIst of Stocked Products Info
-        public string DisplayVendItemList()
-        {
-            return "Hello World"; //TODO Add method
-        }
-        //*****Maybe DisplayVendItemInfo() and DisplayVendItemList() can be another class, VendingMachineDisplay????
+        
+        //Methods
 
         //Adds to VendingMachine Balance, sutbtract from Customer.Balance, Log Money with AuditLogger (maybe return string with new balance??)
         public bool FeedMoney()
@@ -44,10 +35,14 @@ namespace Capstone.Classes
             return true; //TODO Add method
         }
 
-        //Make Change Calculates change into quarter, dime, nickel, penny
-        public bool MakeChange()
+        public decimal GetBalance()
         {
-            return true; //TODO Add method
+            return Balance;
+        }
+
+        public Dictionary<string[], int> GetVendItemInventory()
+        {
+            return VendItemInventory;
         }
     }
 }

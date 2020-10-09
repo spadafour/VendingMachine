@@ -16,19 +16,31 @@ namespace Capstone.Classes.ReadersAndLoggers
             
             VendingMachine vendingMachine = new VendingMachine();
             Queue<string[]> itemQueue = new Queue<string[]>();
+            
+            //FilePath for Input .CSV File to use with StreamReader
             string directory = Environment.CurrentDirectory;
             string file = "vendingmachine.csv";
             string fullPath = Path.Combine(directory, file);
             
+            //Add each line to queue to be later added VendingMachine.VendItemInventory Dictionary
             try
             {
                 using (StreamReader sr = new StreamReader(fullPath))
                 {
                     while (!sr.EndOfStream)
                     {
-                        string readLine = sr.ReadLine() + $"|{StartingStock}";
-                        string[] itemInfo = readLine.Split("|");
-                        itemQueue.Enqueue(itemInfo);
+                        try
+                        {
+                            string readLine = sr.ReadLine();
+                            string[] itemInfo = readLine.Split("|");
+                            itemQueue.Enqueue(itemInfo);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Write("Unable to add this to Vending Machine: ");
+                            Console.WriteLine(sr.ReadLine());
+                            Console.WriteLine(e.Message);
+                        }
                     }
                 }
             }
@@ -38,16 +50,13 @@ namespace Capstone.Classes.ReadersAndLoggers
                 Console.WriteLine(e.Message);
             }
 
+            //Add the queued items to the Dictionary in VendingMachine as Key. Use int Starting Stock as Value
             foreach (string[] item in itemQueue)
             {
-                string[] itemInfoMinusSlot = new string[item.Length - 1];
-                for (int i = 0; i < item.Length - 2; i++)
-                {
-                    itemInfoMinusSlot[i] = item[i + 1];
-                }
-                vendingMachine.VendItemInventory.Add(item[0], itemInfoMinusSlot);
+                vendingMachine.VendItemInventory.Add(item, StartingStock);
             }
 
+            //Output is the newly-generated Vending Machine Object
             return vendingMachine;
         }
     }

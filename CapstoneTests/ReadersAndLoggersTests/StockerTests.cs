@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CapstoneTests.ReadersAndLoggersTests
 {
-    class StockerTests
+    [TestClass]
+    public class StockerTests
     {
     }
 }

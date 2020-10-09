@@ -11,60 +11,64 @@ namespace Capstone.Classes.Menus.SubMenus
     {                //changed return type to for pushing purposes
         public static bool GoToPurchaseMenu(VendingMachine vendingMachine)
         {
-            Console.WriteLine("(1) Feed Money");
-            Console.WriteLine("(2) Select Product");
-            Console.WriteLine("(3) Finish Transaction");
-            Char userSelection = Console.ReadKey().KeyChar;
-            Console.WriteLine(System.Environment.NewLine);
+           
             bool isOption = false;
             do
             {
+                Console.WriteLine("(1) Feed Money");
+                Console.WriteLine("(2) Select Product");
+                Console.WriteLine("(3) Finish Transaction");
+                Char userSelection = Console.ReadKey().KeyChar;
+                Console.WriteLine(System.Environment.NewLine);
                 switch (userSelection)
                 {
-                    case '1': //Feed Money method/case handling -> consider adding most of this shit to FeedMoney method
-                        //have to refactor all of this
+                    case '1':
                         bool continueToFeed = true;
                         while (continueToFeed == true)
                         {
-                            Console.WriteLine("Please enter the amount of money in dollars you would like to feed into the vending machine");
+                            Console.WriteLine("Please enter the amount of money in dollar bills you would like to feed into the vending machine");
                             string moneyFedToBeCast = Console.ReadLine();
                             try
                             {
                                 decimal moneyFed = decimal.Parse(moneyFedToBeCast);
                                 decimal[] billTest = new decimal[] { 1, 5, 10, 20 };
-                                billTest.Contains(moneyFed);
+                                if (!billTest.Contains(moneyFed))
+                                    {
+                                    Console.WriteLine("Only 1, 5, 10, and 20 dollar bills can be inserted");
+                                    Console.WriteLine();
+                                    break; }
+                               
                                 vendingMachine.FeedMoney(moneyFed);
-                                Console.WriteLine("Type Y to continue feeding money, or N to stop feeding money. Any other input will be registered as N");
+                                Console.Write("Type N to stop feeding money to the machine, or any other key to continue feeding money ");
                                 Char feedMoneyYorN = Console.ReadKey().KeyChar;
-                                if (feedMoneyYorN == 'N')
+                                Console.WriteLine();
+                                if (feedMoneyYorN == 'N' || feedMoneyYorN == 'n')
                                 {
                                     continueToFeed = false;
+                                    
                                 }
                             }
                             catch (Exception e)
                             {
+                                Console.WriteLine("Something went wrong, please try again");
                                 continueToFeed = true;
+                                
                             }
                         } break;
-                    case '2': //Select Item method/case handling
+                    case '2':
                         Console.WriteLine("Please select an item number from the following list of products");
+                        Console.WriteLine($"A balance of {vendingMachine.Balance} remains in the vending machine");
                         DisplayItemsMenu.GoToDisplayItemsMenu(vendingMachine.GetVendItemInventory());
-                        Console.WriteLine("Now enter the key of the item you would like to purchase");
-                        try
-                        {
-                            string itemKey = Console.ReadLine();
-                            vendingMachine.VendSelectedItem(itemKey);
-                        }
-                        catch
-                        {
-
-                        }
+                        Console.WriteLine("Now input the key of the item you would like to purchase, or press X to return to purchase menu");
+                        string itemKey = Console.ReadLine();
+                        vendingMachine.VendSelectedItem(itemKey);
                         break;
 
                     case '3': //Access Finish Transaction Menu
                         FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine);
                         userSelection = '0'; isOption = true; break;
                     default:
+                        Console.WriteLine("A number other than 1, 2, or 3, was entered. Please enter a new number");
                         Console.WriteLine("(1) Display Vending Machine Items");
                         Console.WriteLine("(2) Purchase");
                         Console.WriteLine("(3) Finish Transaction");

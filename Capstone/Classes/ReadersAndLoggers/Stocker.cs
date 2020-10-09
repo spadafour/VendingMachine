@@ -53,7 +53,7 @@ namespace Capstone.Classes.ReadersAndLoggers
             //Add the queued items to the Dictionary in VendingMachine as Key. Use int Starting Stock as Value
             foreach (string[] item in itemQueue)
             {
-                vendingMachine.VendItemInventory.Add(item, StartingStock);
+                vendingMachine.AddItemToInventory(item, StartingStock);
             }
 
             //Output is the newly-generated Vending Machine Object

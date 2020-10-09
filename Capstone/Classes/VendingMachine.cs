@@ -3,6 +3,7 @@ using Capstone.Classes.VendItems;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
@@ -85,9 +86,28 @@ namespace Capstone.Classes
             return true; //TODO Add method
         }
 
-        public Dictionary<string, int> MakeChange() //Returns changePurse int[] and Zeroes balance
+        public Dictionary<string, int> MakeChange() //Returns changePurse dictionary and Zeroes balance
         {
             Dictionary<string, int> changePurse = new Dictionary<string, int> { { "Quarters", 0 }, { "Dimes", 0 }, { "Nickels", 0 }, { "Pennies", 0 } };
+            int currentCentBalance = (int)(Balance * 100);
+            if (currentCentBalance >= 25)
+            {
+                changePurse["Quarters"] = currentCentBalance / 25;
+                currentCentBalance %= 25;
+            }
+            if (currentCentBalance >= 10)
+            {
+                changePurse["Dimes"] = currentCentBalance / 10;
+                currentCentBalance %= 10;
+            }
+            if (currentCentBalance >=5)
+            {
+                changePurse["Nickels"] = currentCentBalance / 5;
+                currentCentBalance %= 5;
+            }
+            changePurse["Pennies"] = currentCentBalance;
+            currentCentBalance -= currentCentBalance;
+            Balance = currentCentBalance;
             return changePurse;
         }
     } 

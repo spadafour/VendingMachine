@@ -7,9 +7,9 @@ using System.Threading;
 
 namespace Capstone.Classes.Menus.SubMenus
 {
-    public class PurchaseMenu
+    public class PurchaseMenu : UI
     {                //changed return type to for pushing purposes
-        public static bool GoToPurchaseMenu(VendingMachine vendingMachine)
+        public bool GoToPurchaseMenu()
         {
            
             bool isOption = false;
@@ -41,8 +41,8 @@ namespace Capstone.Classes.Menus.SubMenus
                                     Console.WriteLine();
                                     break; }
                                
-                                vendingMachine.FeedMoney(moneyFed);
-                                Console.WriteLine($"The vending maching balance is {vendingMachine.Balance}");
+                                Vendomatic.FeedMoney(moneyFed);
+                                Console.WriteLine($"The vending maching balance is {Vendomatic.Balance}");
                                 Console.Write("Type N to stop feeding money to the machine, or any other key to continue feeding money ");
                                 Char feedMoneyYorN = Console.ReadKey().KeyChar;
                                 Console.WriteLine();
@@ -61,15 +61,15 @@ namespace Capstone.Classes.Menus.SubMenus
                         } break;
                     case '2':
                         Console.WriteLine("Please select an item number from the following list of products");
-                        Console.WriteLine($"A balance of {vendingMachine.Balance} remains in the vending machine");
-                        DisplayItemsMenu.GoToDisplayItemsMenu(vendingMachine.GetVendItemInventory());
+                        Console.WriteLine($"A balance of {Vendomatic.Balance} remains in the vending machine");
+                        DisplayItems.GoToDisplayItemsMenu();
                         Console.WriteLine("Now input the key of the item you would like to purchase, or press X to return to purchase menu");
                         string itemKey = Console.ReadLine();
-                        vendingMachine.VendSelectedItem(itemKey);
+                        Vendomatic.VendSelectedItem(itemKey);
                         break;
 
                     case '3': //Access Finish Transaction Menu
-                        FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine);
+                        FinishTransactionMenu.GoToFinishTransactionMenu(Vendomatic);
                         userSelection = '0'; isOption = true; break;
                     default:
                         Console.WriteLine("A number other than 1, 2, or 3, was entered. Please enter a new number");

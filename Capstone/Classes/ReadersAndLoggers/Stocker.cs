@@ -1,4 +1,5 @@
-﻿using Capstone.Classes.VendItems;
+﻿using Capstone.Classes.Menus;
+using Capstone.Classes.VendItems;
 using Capstone.Classes.VendItems.VendItemTypes;
 using System;
 using System.Collections;
@@ -10,13 +11,12 @@ using System.Text;
 
 namespace Capstone.Classes.ReadersAndLoggers
 {
-    public class Stocker
+    public class Stocker : UI
     {
         public int StartingStock { get; set; } = 5;
-        public VendingMachine GenerateNewVendingMachine()
+        public VendingMachine StockVendingMachine()
         {
-            
-            VendingMachine vendingMachine = new VendingMachine();
+            VendingMachine vendingMachineForStocker = new VendingMachine();
             Queue<string[]> itemQueue = new Queue<string[]>();
             
             //FilePath for Input .CSV File to use with StreamReader
@@ -59,24 +59,23 @@ namespace Capstone.Classes.ReadersAndLoggers
                 {
                     case "chip":
                         Chip itemChip = new Chip(item[0], item[1], decimal.Parse(item[2]));
-                        vendingMachine.AddItemToInventory(itemChip, StartingStock); break;
+                        vendingMachineForStocker.AddItemToInventory(itemChip, StartingStock); break;
                     case "candy":
                         Candy itemCandy = new Candy(item[0], item[1], decimal.Parse(item[2]));
-                        vendingMachine.AddItemToInventory(itemCandy, StartingStock); break;
+                        vendingMachineForStocker.AddItemToInventory(itemCandy, StartingStock); break;
                     case "drink":
                         Drink itemDrink = new Drink(item[0], item[1], decimal.Parse(item[2]));
-                        vendingMachine.AddItemToInventory(itemDrink, StartingStock); break;
+                        vendingMachineForStocker.AddItemToInventory(itemDrink, StartingStock); break;
                     case "gum":
                         Gum itemGum = new Gum(item[0], item[1], decimal.Parse(item[2]));
-                        vendingMachine.AddItemToInventory(itemGum, StartingStock); break;
+                        vendingMachineForStocker.AddItemToInventory(itemGum, StartingStock); break;
                     default:
                         Console.WriteLine("Unable to Add Item To Vend Inventory"); break;
                 }
                 
             }
 
-            //Output is the newly-generated Vending Machine Object
-            return vendingMachine;
+            return vendingMachineForStocker;
         }
     }
 }

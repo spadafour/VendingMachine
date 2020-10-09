@@ -8,18 +8,37 @@ namespace Capstone.Classes.Menus
 {
     public class UI
     {
-        public VendingMachine VendingMachine = new VendingMachine();
+        public static VendingMachine Vendomatic { get; set; }
+        public static DisplayItemsMenu DisplayItems { get; set; }
+        public PurchaseMenu Purchase { get; set; }
+        public FinishTransactionMenu FinishTransaction { get; set; }
+        public ExitMenu Exit { get; set; }
+        public AuditLogger Auditor = new AuditLogger(); //TODO
+
+
 
         public void UIStart()
         {
+            //Instantiate Menus
+            DisplayItemsMenu displayItems = new DisplayItemsMenu(); DisplayItems = displayItems;
+            PurchaseMenu purchase = new PurchaseMenu(); Purchase = purchase;
+            FinishTransactionMenu finishTransaction = new FinishTransactionMenu(); FinishTransaction = finishTransaction;
+            ExitMenu exit = new ExitMenu(); Exit = exit;
+
+            //Instantiate Vendomatic and Stocker
+            //VendingMachine vendomatic = new VendingMachine();
             Stocker stocker = new Stocker();
-            VendingMachine = stocker.GenerateNewVendingMachine();
+
+            Vendomatic = stocker.StockVendingMachine();
+
+            
+
             Console.WriteLine("Vendo-Matic 800");
             Console.WriteLine();
-            GoToMainMenu(VendingMachine);
+            GoToMainMenu();
         }
 
-        public static bool GoToMainMenu(VendingMachine vendingMachine)
+        public bool GoToMainMenu()
         {
             Console.WriteLine("Main Menu");
             Console.WriteLine("(1) Display Vending Machine Items");
@@ -34,13 +53,13 @@ namespace Capstone.Classes.Menus
                 switch (userSelection)
                 {
                     case '1': //Access Display Items Menu
-                        DisplayItemsMenu.GoToDisplayItemsMenu(vendingMachine.GetVendItemInventory());
+                        DisplayItems.GoToDisplayItemsMenu();
                         userSelection = '0'; isOption = false; break;
                     case '2': //Access Purchase Menu
-                        PurchaseMenu.GoToPurchaseMenu(vendingMachine);
+                        Purchase.GoToPurchaseMenu();
                         userSelection = '0'; isOption = false; break;
                     case '3': //Access Exit
-                        isOption = ExitMenu.GoToExitMenu();
+                        isOption = Exit.GoToExitMenu();
                         userSelection = '0'; break;
                     default:
                         Console.WriteLine("Main Menu");

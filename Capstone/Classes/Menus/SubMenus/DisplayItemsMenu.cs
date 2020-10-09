@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Capstone.Classes.Menus.SubMenus
 {
-    public class DisplayItemsMenu
+    public class DisplayItemsMenu : UI
     {
-        public static bool GoToDisplayItemsMenu(Dictionary<VendItem, int> vendItems)
+        public void GoToDisplayItemsMenu()
         {
-            foreach (KeyValuePair <VendItem, int> item in vendItems)
+            foreach (KeyValuePair <VendItem, int> item in Vendomatic.GetVendItemInventory())
             {
-                string printItemLine = $"{item.Key.SlotNumber}. {item.Key.ItemName} - {item.Key.Price:C} - {vendItems[item.Key]}";
+                string printItemLine = $"{item.Key.SlotNumber}. {item.Key.ItemName} - {item.Key.Price:C} - {Vendomatic.GetVendItemInventory()[item.Key]}";
                 if (item.Value == 0)
                 {
                     Console.WriteLine(printItemLine + " - SOLD OUT");
@@ -19,7 +19,6 @@ namespace Capstone.Classes.Menus.SubMenus
                 else Console.WriteLine(printItemLine);
             }
             Console.WriteLine(System.Environment.NewLine);
-            return true;
         }
     }
 }

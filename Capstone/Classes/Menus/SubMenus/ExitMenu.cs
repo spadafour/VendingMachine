@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Capstone.Classes.Menus.SubMenus
 {
-    public class ExitMenu
+    public class ExitMenu : UI
     {
-        public static bool GoToExitMenu()
+        public bool GoToExitMenu()
         {
             Console.Write("Are you sure you want to quit? 1=Yes / 2=No: ");
             Char userSelection = Console.ReadKey().KeyChar;

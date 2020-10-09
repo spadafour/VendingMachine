@@ -39,8 +39,8 @@ namespace Capstone.Classes.Menus
                     case '2': //Access Purchase Menu
                         PurchaseMenu.GoToPurchaseMenu(vendingMachine);
                         userSelection = '0'; isOption = false; break;
-                    case '3': //Access Finish Transaction Menu
-                        isOption = FinishTransactionMenu.GoToFinishTransactionMenu(vendingMachine);
+                    case '3': //Access Exit
+                        isOption = ExitMenu.GoToExitMenu();
                         userSelection = '0'; break;
                     default:
                         Console.WriteLine("Main Menu");

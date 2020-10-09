@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CapstoneTests
+namespace CapstoneTests.VendItemsTests.VendItemTypesTests
 {
     [TestClass]
-    public class VendingMachineTests
+    public class CandyTests
     {
     }
 }

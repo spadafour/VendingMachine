@@ -11,7 +11,7 @@ namespace Capstone.Classes.Menus
         {
             Console.WriteLine("(1) Display Vending Machine Items");
             Console.WriteLine("(2) Purchase");
-            Console.WriteLine("(3) Finish Transaction");
+            Console.WriteLine("(3) Finish Transaction"); //this should say "Exit"
             Char userSelection = Console.ReadKey().KeyChar;
             Console.WriteLine(System.Environment.NewLine);
             bool isOption = false;

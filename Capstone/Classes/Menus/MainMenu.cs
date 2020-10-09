@@ -39,6 +39,7 @@ namespace Capstone.Classes.Menus
             }
             while (!isOption);
 
+            Console.WriteLine("Thank you! Come again!");
             return true;
         }
     }

@@ -13,28 +13,26 @@ namespace Capstone.Classes
         //Parameters
         private decimal Balance { get; set; } = 0;
         private Dictionary<VendItem, int> VendItemInventory { get; set; } = new Dictionary<VendItem, int>();
-        public int VendItemCount { get { return VendItemInventory.Count; } }
 
         
         //Methods
-        public decimal GetBalance()
+        public decimal GetBalance() //Returns Balance as decimal
         {
             return Balance;
         }
 
-        public bool AddItemToInventory(VendItem item, int startingStock)
+        public bool AddItemToInventory(VendItem item, int startingStock) //Adds VendItem object, startingStock int to VendItemInventory dictionary
         {
             VendItemInventory.Add(item, startingStock);
             return true;
         }
 
-        public Dictionary<VendItem, int> GetVendItemInventory()
+        public Dictionary<VendItem, int> GetVendItemInventory() //Returns VendItemInventory dictionary
         {
             return VendItemInventory;
         }
-
    
-        public void FeedMoney(decimal moneyFed) //Adds to VendingMachine Balance, sutbtract from Customer.Balance, Log Money with AuditLogger (maybe return string with new balance??)
+        public void FeedMoney(decimal moneyFed) //Adds to VendingMachine Balance
         {
             Balance += moneyFed;
         }
@@ -85,6 +83,12 @@ namespace Capstone.Classes
                     }
         */
             return true; //TODO Add method
-        } 
+        }
+
+        public Dictionary<string, int> MakeChange() //Returns changePurse int[] and Zeroes balance
+        {
+            Dictionary<string, int> changePurse = new Dictionary<string, int> { { "Quarters", 0 }, { "Dimes", 0 }, { "Nickels", 0 }, { "Pennies", 0 } };
+            return changePurse;
+        }
     } 
 }

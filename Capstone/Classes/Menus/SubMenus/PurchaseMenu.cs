@@ -42,6 +42,7 @@ namespace Capstone.Classes.Menus.SubMenus
                                     break; }
                                
                                 vendingMachine.FeedMoney(moneyFed);
+                                Console.WriteLine($"The vending maching balance is {vendingMachine.Balance}");
                                 Console.Write("Type N to stop feeding money to the machine, or any other key to continue feeding money ");
                                 Char feedMoneyYorN = Console.ReadKey().KeyChar;
                                 Console.WriteLine();

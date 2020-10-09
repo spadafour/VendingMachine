@@ -49,10 +49,13 @@ namespace Capstone.Classes
                 secondCheckBool = false;
             }
             Dictionary<VendItem, int> dummyDictionary = new Dictionary<VendItem, int>(VendItemInventory);
+            int counter = 0;
             while (secondCheckBool)
             {
                 foreach (KeyValuePair<VendItem, int> kvp in dummyDictionary)
                 {
+                    counter++;
+                    
                     if (kvp.Key.SlotNumber.ToLower() == itemKey)
                     {
                         if (Balance >= kvp.Key.Price)
@@ -63,11 +66,18 @@ namespace Capstone.Classes
                             
                             if (confirmPurchase == 'Y' || confirmPurchase == 'y')
                             {
-                                Balance -= kvp.Key.Price;
-                                VendItemInventory[kvp.Key] = kvp.Value - 1;
-                                Console.WriteLine(kvp.Key.Message);
-                                Console.WriteLine();
-                                secondCheckBool = false;
+                                if (kvp.Value > 0)
+                                {
+                                    Balance -= kvp.Key.Price;
+                                    VendItemInventory[kvp.Key] = kvp.Value - 1;
+                                    Console.WriteLine(kvp.Key.Message);
+                                    Console.WriteLine();
+                                    secondCheckBool = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("SOLD OUT");
+                                }
                             }
                             else if (confirmPurchase == 'N' || confirmPurchase == 'n')
                             {
@@ -86,8 +96,12 @@ namespace Capstone.Classes
                             secondCheckBool = false;
                         }
                     }
+                    else if (counter == dummyDictionary.Count)
+                    {
+                        Console.WriteLine($"Sorry, there is not an item with slot {itemKey}");
+                        secondCheckBool = false;
+                    }
                 }
-                secondCheckBool = false;
             }
             
         }

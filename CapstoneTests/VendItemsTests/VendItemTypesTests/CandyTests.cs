@@ -28,12 +28,5 @@ namespace CapstoneTests.VendItemsTests.VendItemTypesTests
 
             Assert.AreEqual(expected2, result2);
         }
-        [TestMethod]
-        public void CandyTestExceptions()
-        {
-            Candy candy = new Candy();
-            string expected 
-        }
-        }
     }
 }

@@ -26,7 +26,7 @@ namespace Capstone.Classes
         }
 
         public bool AddItemToInventory(VendItem item, int startingStock) //Adds VendItem object, startingStock int to VendItemInventory dictionary
-        {
+        {//Add some if statements to catch if int startingStock is negative, or maybe something to account for int.max??
             VendItemInventory.Add(item, startingStock);
             return true;
         }

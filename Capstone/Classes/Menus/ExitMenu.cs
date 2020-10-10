@@ -10,26 +10,26 @@ namespace Capstone.Classes.Menus
         {
             Console.Write("Are you sure you want to quit? 1=Yes / 2=No: ");
             Char userSelection = Console.ReadKey().KeyChar;
-            Console.WriteLine(System.Environment.NewLine);
-            bool isOption = false;
+            Console.WriteLine();
+            bool answered1Or2 = false;
             bool shouldExit = false;
             do
             {
                 switch (userSelection)
                 {
                     case '1': //Yes
-                        userSelection = '0'; isOption = true; shouldExit = true; break;
+                        answered1Or2 = true; shouldExit = true; break;
                     case '2': //No
                         Console.WriteLine("Returning to Main Menu");
-                        userSelection = '0'; isOption = true; shouldExit = false; break;
+                        answered1Or2 = true; shouldExit = false; break;
                     default:
                         Console.Write("Are you sure you want to quit? 1=Yes / 2=No: ");
                         userSelection = Console.ReadKey().KeyChar;
-                        Console.WriteLine(System.Environment.NewLine);
-                        isOption = false; break;
+                        Console.WriteLine();
+                        answered1Or2 = false; break;
                 }
             }
-            while (!isOption);
+            while (!answered1Or2);
 
             return shouldExit;
         }

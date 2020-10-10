@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CapstoneTests.MenuTests.SubMenusTests
+namespace CapstoneTests.MenuTests
 {
     [TestClass]
     public class FinishTransactionMenuTests

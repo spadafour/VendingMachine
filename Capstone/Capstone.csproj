@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Classes\Menus\SubMenus\" />
+    <Compile Remove="Classes\Menus\SubMenus\**" />
+    <EmbeddedResource Remove="Classes\Menus\SubMenus\**" />
+    <None Remove="Classes\Menus\SubMenus\**" />
   </ItemGroup>
 
 </Project>

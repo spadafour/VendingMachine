@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Capstone.Classes.Menus.SubMenus
+namespace Capstone.Classes.Menus
 {
-    public class ExitMenu : UI
+    public class ExitMenu : IMenu
     {
-        public bool GoToExitMenu()
+        public bool GoTo()
         {
             Console.Write("Are you sure you want to quit? 1=Yes / 2=No: ");
             Char userSelection = Console.ReadKey().KeyChar;

@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Capstone.Classes.Menus.SubMenus
+namespace Capstone.Classes.Menus
 {
-    public class FinishTransactionMenu
+    public class FinishTransactionMenu : IMenu
     {
-        public static bool GoToFinishTransactionMenu(VendingMachine vendingMachine)
+        VendingMachine Vendomatic { get; }
+
+        public FinishTransactionMenu(VendingMachine vendomatic)
+        {
+            Vendomatic = vendomatic;
+        }
+
+        public bool GoTo()
         {
             Console.Write("Finish transaction and dispense change? 1=Yes / 2=No: ");
             Char userSelection = Console.ReadKey().KeyChar;
             Console.WriteLine(System.Environment.NewLine);
-            bool isOption = false;
+            bool answeredYOrN = false;
             bool shouldExit = false;
             do
             {
@@ -19,24 +26,24 @@ namespace Capstone.Classes.Menus.SubMenus
                 {
                     case '1': //Yes
                         Console.WriteLine("Dispensing Change:");
-                        Dictionary<string, int> coinPurse = vendingMachine.MakeChange();
+                        Dictionary<string, int> coinPurse = Vendomatic.MakeChange();
                         foreach (string coin in coinPurse.Keys)
                         {
                             Console.WriteLine($"{coin}: {coinPurse[coin]}");
                         }
-                        Console.WriteLine("\n" + "Vendo-Matic Balance: " + vendingMachine.GetBalance() + "\n");
-                        userSelection = '0'; isOption = true; shouldExit = true; break;
+                        Console.WriteLine("\n" + "Vendo-Matic Balance: " + Vendomatic.GetBalance() + "\n");
+                        userSelection = '0'; answeredYOrN = true; shouldExit = true; break;
                     case '2': //No
                         Console.WriteLine("Returning to Main Menu");
-                        userSelection = '0'; isOption = true; shouldExit = false; break;
+                        userSelection = '0'; answeredYOrN = true; shouldExit = false; break;
                     default:
                         Console.Write("Finish transaction and dispense change? 1=Yes / 2=No : ");
                         userSelection = Console.ReadKey().KeyChar;
                         Console.WriteLine(System.Environment.NewLine);
-                        isOption = false; break;
+                        answeredYOrN = false; break;
                 }
             }
-            while (!isOption);
+            while (!answeredYOrN);
 
             return shouldExit;
         }

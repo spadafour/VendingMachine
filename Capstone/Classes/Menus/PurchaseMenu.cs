@@ -5,11 +5,18 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 
-namespace Capstone.Classes.Menus.SubMenus
+namespace Capstone.Classes.Menus
 {
-    public class PurchaseMenu : UI
-    {                //changed return type to for pushing purposes
-        public bool GoToPurchaseMenu()
+    public class PurchaseMenu : IMenu
+    {
+        VendingMachine Vendomatic { get; }
+
+        public PurchaseMenu(VendingMachine vendomatic)
+        {
+            Vendomatic = vendomatic;
+        }
+
+        public bool GoTo()
         {
            
             bool isOption = false;
@@ -21,8 +28,9 @@ namespace Capstone.Classes.Menus.SubMenus
                 Console.WriteLine("(3) Finish Transaction");
                 Console.Write("Selection: ");
                 Char userSelection = Console.ReadKey().KeyChar;
-                
                 Console.WriteLine(System.Environment.NewLine);
+                //rspadafore: Added this code to get fixed access to other Menus
+                IMenu menu;
                 switch (userSelection)
                 {
                     case '1':
@@ -62,14 +70,18 @@ namespace Capstone.Classes.Menus.SubMenus
                     case '2':
                         Console.WriteLine("Please select an item number from the following list of products");
                         Console.WriteLine($"A balance of {Vendomatic.Balance} remains in the vending machine");
-                        DisplayItems.GoToDisplayItemsMenu();
+                        //rspadafore: Changed how to access Display Items Menu
+                        menu = new DisplayItemsMenu(Vendomatic);
+                        menu.GoTo();
                         Console.WriteLine("Now input the key of the item you would like to purchase, or press X to return to purchase menu");
                         string itemKey = Console.ReadLine();
                         Vendomatic.VendSelectedItem(itemKey);
                         break;
 
                     case '3': //Access Finish Transaction Menu
-                        FinishTransactionMenu.GoToFinishTransactionMenu(Vendomatic);
+                        //rspadafore: Changed how to access Finish Transaction Menu
+                        menu = new FinishTransactionMenu(Vendomatic);
+                        menu.GoTo();
                         userSelection = '0'; isOption = true; break;
                     default:
                         Console.WriteLine("A number other than 1, 2, or 3, was entered. Please enter a new number");

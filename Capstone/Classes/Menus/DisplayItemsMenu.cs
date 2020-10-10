@@ -3,11 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Capstone.Classes.Menus.SubMenus
+namespace Capstone.Classes.Menus
 {
-    public class DisplayItemsMenu : UI
+    public class DisplayItemsMenu : IMenu
     {
-        public void GoToDisplayItemsMenu()
+        VendingMachine Vendomatic { get; }
+
+        public DisplayItemsMenu(VendingMachine vendomatic)
+        {
+            Vendomatic = vendomatic;
+        }
+
+        public bool GoTo()
         {
             foreach (KeyValuePair <VendItem, int> item in Vendomatic.GetVendItemInventory())
             {
@@ -18,7 +25,8 @@ namespace Capstone.Classes.Menus.SubMenus
                 }
                 else Console.WriteLine(printItemLine);
             }
-            Console.WriteLine(System.Environment.NewLine);
+            Console.WriteLine();
+            return true;
         }
     }
 }

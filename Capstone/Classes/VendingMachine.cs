@@ -1,5 +1,4 @@
-﻿using Capstone.Classes.Coins.CoinTypes;
-using Capstone.Classes.Menus.SubMenus;
+﻿using Capstone.Classes.Menus;
 using Capstone.Classes.VendItems;
 using System;
 using System.Collections;

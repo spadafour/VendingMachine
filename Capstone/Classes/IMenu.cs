@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Capstone.Classes.Coins
+namespace Capstone.Classes
 {
-    class Coin
+    public interface IMenu
     {
+        bool GoTo();
     }
 }

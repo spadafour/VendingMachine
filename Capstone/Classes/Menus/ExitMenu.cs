@@ -12,16 +12,16 @@ namespace Capstone.Classes.Menus
             Char userSelection = Console.ReadKey().KeyChar;
             Console.WriteLine();
             bool answered1Or2 = false;
-            bool shouldExit = false;
+            bool keepRunning = true;
             do
             {
                 switch (userSelection)
                 {
                     case '1': //Yes
-                        answered1Or2 = true; shouldExit = true; break;
+                        answered1Or2 = true; keepRunning = false; break;
                     case '2': //No
-                        Console.WriteLine("Returning to Main Menu");
-                        answered1Or2 = true; shouldExit = false; break;
+                        Console.WriteLine("Returning to Main Menu\n");
+                        answered1Or2 = true; keepRunning = true; break;
                     default:
                         Console.Write("Are you sure you want to quit? 1=Yes / 2=No: ");
                         userSelection = Console.ReadKey().KeyChar;
@@ -31,7 +31,7 @@ namespace Capstone.Classes.Menus
             }
             while (!answered1Or2);
 
-            return shouldExit;
+            return keepRunning;
         }
     }
 }

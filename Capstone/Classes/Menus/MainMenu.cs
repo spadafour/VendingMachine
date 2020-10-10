@@ -13,7 +13,7 @@ namespace Capstone.Classes.Menus
             Console.WriteLine("(1) Display Vending Machine Items");
             Console.WriteLine("(2) Purchase");
             Console.WriteLine("(3) Exit");
-            Console.Write("Selection: ");
+            Console.Write("Menu Selection: ");
             return true;
         }
     }

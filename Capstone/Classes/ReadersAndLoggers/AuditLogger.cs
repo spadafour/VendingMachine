@@ -6,22 +6,13 @@ namespace Capstone.Classes.ReadersAndLoggers
 {
     public class AuditLogger
     {
-        /*
-         * Parameters
-         */
+        private Queue<string> AuditLog { get; set; } = new Queue<string>();
+        private int PreBalanceHold { get; set; }
 
-        //Holds text to print to the Audit Document
-        public Queue<string> AuditLog { get; set; } = new Queue<string>();
-
-
-        /*
-         * Methods
-         */
-
-        //Date, Time, FEED MONEY, How much money in, VendingMachine.Balance
-        public bool LogMoneyIn()
+        public bool LogMoneyIn(int moneyFed, decimal vendBalance)
         {
-            return true; //TODO Add method
+            AuditLog.Enqueue($"{DateTime.Now} - FEED MONEY: {moneyFed} - BALANCE: {vendBalance}");
+            return true;
         }
 
         //Date, Time, ProductVended, ProductSlot, BalanceBefore, BalanceAfter
@@ -30,6 +21,12 @@ namespace Capstone.Classes.ReadersAndLoggers
             return true; //TODO Add method
         }
 
+        public bool HoldBalance(int vendBalance)
+        {
+            PreBalanceHold = vendBalance;
+            return true;
+        }
+        
         //Date, Time, GIVECHANGE, BalanceBefore, BalanceAfter(Should be 0)
         public bool LogChangeMade()
         {

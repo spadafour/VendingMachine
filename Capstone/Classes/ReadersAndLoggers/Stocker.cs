@@ -58,16 +58,16 @@ namespace Capstone.Classes.ReadersAndLoggers
                 switch (item[3].ToLower())
                 {
                     case "chip":
-                        Chip itemChip = new Chip(item[0], item[1], decimal.Parse(item[2]));
+                        VendItem itemChip = new Chip(item[0], item[1], decimal.Parse(item[2]));
                         vendingMachineForStocker.AddItemToInventory(itemChip, StartingStock); break;
                     case "candy":
-                        Candy itemCandy = new Candy(item[0], item[1], decimal.Parse(item[2]));
+                        VendItem itemCandy = new Candy(item[0], item[1], decimal.Parse(item[2]));
                         vendingMachineForStocker.AddItemToInventory(itemCandy, StartingStock); break;
                     case "drink":
-                        Drink itemDrink = new Drink(item[0], item[1], decimal.Parse(item[2]));
+                        VendItem itemDrink = new Drink(item[0], item[1], decimal.Parse(item[2]));
                         vendingMachineForStocker.AddItemToInventory(itemDrink, StartingStock); break;
                     case "gum":
-                        Gum itemGum = new Gum(item[0], item[1], decimal.Parse(item[2]));
+                        VendItem itemGum = new Gum(item[0], item[1], decimal.Parse(item[2]));
                         vendingMachineForStocker.AddItemToInventory(itemGum, StartingStock); break;
                     default:
                         Console.WriteLine("Unable to Add Item To Vend Inventory"); break;

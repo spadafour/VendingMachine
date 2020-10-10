@@ -1,4 +1,5 @@
-﻿using Capstone.Classes.Menus.SubMenus;
+﻿using Capstone.Classes.Coins.CoinTypes;
+using Capstone.Classes.Menus.SubMenus;
 using Capstone.Classes.VendItems;
 using System;
 using System.Collections;
@@ -15,6 +16,8 @@ namespace Capstone.Classes
         //Parameters
         public decimal Balance { get; private set; } = 0;
         private Dictionary<VendItem, int> VendItemInventory { get; set; } = new Dictionary<VendItem, int>();
+        //TODO Add public string[] BillReader as holder for bills to recognize
+        //TODO Maybe Generate Coin Purse Here? Just an array that holds possible coins? public Coin[] coinTypes
 
 
         //Methods
@@ -40,6 +43,7 @@ namespace Capstone.Classes
         }
 
         public void VendSelectedItem(string itemKey) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
+            //TODO Clean up method VendSelectedItem() / move some code to submenu
         {
             string lowerCase = itemKey.ToLower();
             bool secondCheckBool = true;
@@ -105,7 +109,8 @@ namespace Capstone.Classes
             
         }
         public Dictionary<string, int> MakeChange() //Returns changePurse dictionary and Zeroes balance
-
+            //TODO Reconfigure MakeChange() to generate new coin objects inside of changePurse. Alter if statements to Loop through coinpurse to generate change.
+            //Maybe make some of this logic its own class?
         {
             Dictionary<string, int> changePurse = new Dictionary<string, int> { { "Quarters", 0 }, { "Dimes", 0 }, { "Nickels", 0 }, { "Pennies", 0 } };
             int currentCentBalance = (int)(Balance * 100);

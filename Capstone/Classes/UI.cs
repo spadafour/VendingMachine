@@ -9,7 +9,7 @@ namespace Capstone.Classes
     public class UI
     {
         private VendingMachine Vendomatic { get; set; }
-        public AuditLogger Auditor = new AuditLogger(); //TODO
+        public AuditLogger Auditor = new AuditLogger();
 
         public void UIStart()
         {
@@ -34,7 +34,7 @@ namespace Capstone.Classes
                         menu.GoTo();
                         userSelection = '0'; keepRunning = true; break;
                     case '2': //Access Purchase Menu
-                        menu = new PurchaseMenu(Vendomatic);
+                        menu = new PurchaseMenu(Vendomatic, Auditor);
                         menu.GoTo();
                         userSelection = '0'; keepRunning = true; break;
                     case '3': //Access Exit Menu

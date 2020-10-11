@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Capstone.Classes.VendItems;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Capstone.Classes.ReadersAndLoggers
@@ -7,30 +9,34 @@ namespace Capstone.Classes.ReadersAndLoggers
     public class AuditLogger
     {
         private Queue<string> AuditLog { get; set; } = new Queue<string>();
-        private int PreBalanceHold { get; set; }
+        private decimal PreBalanceHold { get; set; }
+        private string TimeStamp { get; set; }
 
-        public bool LogMoneyIn(int moneyFed, decimal vendBalance)
+        public bool LogMoneyIn(decimal moneyFed, decimal vendBalance)
         {
-            AuditLog.Enqueue($"{DateTime.Now} - FEED MONEY: {moneyFed} - BALANCE: {vendBalance}");
+            TimeStamp = DateTime.Now.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
+            AuditLog.Enqueue($"{TimeStamp} FEED MONEY: {moneyFed:C2} {vendBalance:C2}");
             return true;
         }
 
-        //Date, Time, ProductVended, ProductSlot, BalanceBefore, BalanceAfter
-        public bool LogItemVended()
-        {
-            return true; //TODO Add method
-        }
-
-        public bool HoldBalance(int vendBalance)
+        public bool HoldBalance(decimal vendBalance)
         {
             PreBalanceHold = vendBalance;
             return true;
         }
-        
-        //Date, Time, GIVECHANGE, BalanceBefore, BalanceAfter(Should be 0)
-        public bool LogChangeMade()
+
+        public bool LogItemVended(VendItem vendItem, decimal vendBalance)
         {
-            return true; //TODO Add method
+            TimeStamp = DateTime.Now.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
+            AuditLog.Enqueue($"{TimeStamp} {vendItem.ItemName} {vendItem.SlotNumber} {PreBalanceHold:C2} {vendBalance:C2}");
+            return true;
         }
-    }
+        
+        public bool LogChangeMade(decimal vendBalance)
+        {
+            TimeStamp = DateTime.Now.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
+            AuditLog.Enqueue($"{TimeStamp} GIVE CHANGE: {PreBalanceHold:C2} {vendBalance:C2}");
+            return true;
+        }
+    }//TODO Add Method to Write to external file
 }

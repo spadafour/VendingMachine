@@ -43,6 +43,7 @@ namespace Capstone.Classes
 
         public void VendSelectedItem(string itemKey) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
             //TODO Clean up method VendSelectedItem() / move some code to submenu
+            //TODO Add Audit to Vended Item (Don't forget to grab the pre-transaction balance too)
         {
             string lowerCase = itemKey.ToLower();
             bool secondCheckBool = true;
@@ -108,8 +109,6 @@ namespace Capstone.Classes
             
         }
         public Dictionary<string, int> MakeChange() //Returns changePurse dictionary and Zeroes balance
-            //TODO Reconfigure MakeChange() to generate new coin objects inside of changePurse. Alter if statements to Loop through coinpurse to generate change.
-            //Maybe make some of this logic its own class?
         {
             Dictionary<string, int> changePurse = new Dictionary<string, int> { { "Quarters", 0 }, { "Dimes", 0 }, { "Nickels", 0 }, { "Pennies", 0 } };
             int currentCentBalance = (int)(Balance * 100);

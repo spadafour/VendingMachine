@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone.Classes.ReadersAndLoggers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,10 +8,12 @@ namespace Capstone.Classes.Menus
     public class FinishTransactionMenu : IMenu
     {
         VendingMachine Vendomatic { get; }
+        AuditLogger Auditor { get; }
 
-        public FinishTransactionMenu(VendingMachine vendomatic)
+        public FinishTransactionMenu(VendingMachine vendomatic, AuditLogger auditor)
         {
             Vendomatic = vendomatic;
+            Auditor = auditor;
         }
 
         public bool GoTo()
@@ -26,7 +29,9 @@ namespace Capstone.Classes.Menus
                 {
                     case '1': //Yes
                         Console.WriteLine("Dispensing Change:");
+                        Auditor.HoldBalance(Vendomatic.GetBalance());
                         Dictionary<string, int> coinPurse = Vendomatic.MakeChange();
+                        Auditor.LogChangeMade(Vendomatic.GetBalance());
                         foreach (string coin in coinPurse.Keys)
                         {
                             Console.WriteLine($"{coin}: {coinPurse[coin]}");

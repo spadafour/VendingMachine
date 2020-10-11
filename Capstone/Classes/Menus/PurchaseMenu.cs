@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone.Classes.ReadersAndLoggers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -9,11 +10,13 @@ namespace Capstone.Classes.Menus
 {
     public class PurchaseMenu : IMenu
     {
-        VendingMachine Vendomatic { get; }
+        public VendingMachine Vendomatic { get; }
+        public AuditLogger Auditor { get; }
 
-        public PurchaseMenu(VendingMachine vendomatic)
+        public PurchaseMenu(VendingMachine vendomatic, AuditLogger auditor)
         {
             Vendomatic = vendomatic;
+            Auditor = auditor;
         }
 
         public bool GoTo()
@@ -50,6 +53,7 @@ namespace Capstone.Classes.Menus
                                     break; }
                                
                                 Vendomatic.FeedMoney(moneyFed);
+                                Auditor.LogMoneyIn(moneyFed, Vendomatic.GetBalance());//rspadafore: added line to audit moneyFed
                                 Console.WriteLine($"The vending maching balance is {Vendomatic.Balance}");
                                 Console.Write("Type N to stop feeding money to the machine, or any other key to continue feeding money ");
                                 Char feedMoneyYorN = Console.ReadKey().KeyChar;
@@ -80,7 +84,7 @@ namespace Capstone.Classes.Menus
 
                     case '3': //Access Finish Transaction Menu
                         //rspadafore: Changed how to access Finish Transaction Menu
-                        menu = new FinishTransactionMenu(Vendomatic);
+                        menu = new FinishTransactionMenu(Vendomatic, Auditor);
                         menu.GoTo();
                         userSelection = '0'; isOption = true; break;
                     default:

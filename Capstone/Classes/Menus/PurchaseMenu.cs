@@ -21,19 +21,17 @@ namespace Capstone.Classes.Menus
 
         public bool GoTo()
         {
-           
-            bool isOption = false;
+            Console.WriteLine("Purchase Menu");
+            Console.WriteLine("(1) Feed Money");
+            Console.WriteLine("(2) Select Product");
+            Console.WriteLine("(3) Finish Transaction");
+            Console.Write("Purchase Menu Selection: ");
+            Char userSelection = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+            IMenu menu;
+            bool shouldReturnToMain = false;
             do
-            {
-                Console.WriteLine("Purchase Menu");
-                Console.WriteLine("(1) Feed Money");
-                Console.WriteLine("(2) Select Product");
-                Console.WriteLine("(3) Finish Transaction");
-                Console.Write("Selection: ");
-                Char userSelection = Console.ReadKey().KeyChar;
-                Console.WriteLine(System.Environment.NewLine);
-                //rspadafore: Added this code to get fixed access to other Menus
-                IMenu menu;
+            { 
                 switch (userSelection)
                 {
                     case '1':
@@ -46,22 +44,21 @@ namespace Capstone.Classes.Menus
                         break;
                     case '3':
                         menu = new FinishTransactionMenu(Vendomatic, Auditor);
-
-                        isOption = menu.GoTo();
+                        shouldReturnToMain = menu.GoTo();
                         Auditor.AuditWriter();
                         break;
                     default:
                         Console.WriteLine("A number other than 1, 2, or 3, was entered. Please enter a new number");
-                        Console.WriteLine("(1) Display Vending Machine Items");
-                        Console.WriteLine("(2) Purchase");
+                        Console.WriteLine("(1) Feed Money");
+                        Console.WriteLine("(2) Select Product");
                         Console.WriteLine("(3) Finish Transaction");
-                        Console.Write("Selection: ");
+                        Console.Write("Purchase Menu Selection: ");
                         userSelection = Console.ReadKey().KeyChar;
                         Console.WriteLine(System.Environment.NewLine);
                         break;
                 }
             }
-            while (!isOption);
+            while (!shouldReturnToMain);
 
             return true;
         }

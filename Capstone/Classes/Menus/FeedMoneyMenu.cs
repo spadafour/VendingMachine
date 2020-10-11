@@ -31,8 +31,6 @@ namespace Capstone.Classes.Menus
                 {
                     Console.Write("Please enter the amount of money [1, 5, 10, 20, or \"cancel\"]): ");
                     moneyFed = Console.ReadLine().ToLower();
-                    
-                    
                     isBill = possibleBills.Contains(moneyFed);
                     if (!isBill)
                     {
@@ -44,6 +42,7 @@ namespace Capstone.Classes.Menus
                 if (moneyFed != "cancel")
                 {
                     Vendomatic.FeedMoney(decimal.Parse(moneyFed));
+                    Auditor.LogMoneyIn(decimal.Parse(moneyFed), Vendomatic.Balance);
                     Console.WriteLine($"Money added: {moneyFed}   Current balance: {Vendomatic.Balance}");
                 }
 

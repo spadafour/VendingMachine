@@ -38,5 +38,10 @@ namespace Capstone.Classes.ReadersAndLoggers
             AuditLog.Enqueue($"{TimeStamp} GIVE CHANGE: {PreBalanceHold:C2} {vendBalance:C2}");
             return true;
         }
+
+        public Queue<string> GetAuditLogTest()
+        {
+            return AuditLog;
+        }
     }//TODO Add Method to Write to external file
 }

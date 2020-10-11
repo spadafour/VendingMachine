@@ -14,10 +14,10 @@ namespace Capstone.Classes
         public void UIStart()
         {
             Vendomatic = new Stocker().StockVendingMachine();
-            GoToMainMenu();
+            GoToMenus();
         }
 
-        public bool GoToMainMenu()
+        public bool GoToMenus()
         {
             Console.WriteLine("Vendo-Matic 800\n");
             IMenu menu = new MainMenu();

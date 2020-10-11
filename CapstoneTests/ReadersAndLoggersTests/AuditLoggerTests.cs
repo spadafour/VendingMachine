@@ -1,4 +1,6 @@
 ﻿using Capstone.Classes.ReadersAndLoggers;
+using Capstone.Classes.VendItems;
+using Capstone.Classes.VendItems.VendItemTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -22,21 +24,8 @@ namespace CapstoneTests.ReadersAndLoggersTests
                 {
                 result = $"FEED MONEY: {moneyFed:C2} {vendBalance:C2}";
             }
-            
             string expected = $"FEED MONEY: {moneyFed:C2} {vendBalance:C2}";
             Assert.AreEqual(expected, result);
-
-
-        }
-        [TestMethod]
-        public void LogItemVended()
-        {
-
-        }
-        [TestMethod]
-        public void LogChangeMade()
-        {
-
         }
     }
 }

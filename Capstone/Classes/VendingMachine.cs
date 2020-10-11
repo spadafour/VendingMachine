@@ -61,7 +61,7 @@ namespace Capstone.Classes
                     if (kvp.Key.SlotNumber.ToLower() == itemKey.ToLower())
                     {
                         counter--;
-                        if (Balance >= kvp.Key.Price)
+                        if (Balance >= kvp.Key.Price && kvp.Value > 0)
                         {
                             Console.WriteLine($"You have chosen {kvp.Key.ItemName}, are you sure you want to buy this item?");
                             Console.Write("type Y to confirm purchase, or N to stop purchase. Any other key will take you back to the purchase menu ");
@@ -78,10 +78,7 @@ namespace Capstone.Classes
                                     auditor.LogItemVended(kvp.Key, Balance);
                                     secondCheckBool = false;
                                 }
-                                else
-                                {
-                                    Console.WriteLine("SOLD OUT");
-                                }
+                               
                             }
                             else if (confirmPurchase == 'N' || confirmPurchase == 'n')
                             {
@@ -94,13 +91,17 @@ namespace Capstone.Classes
                                 secondCheckBool = false;
                             }
                         }
-                        else
+                        else if (Balance <= kvp.Key.Price)
                         {
                             Console.WriteLine("Sorry, not enough money has been fed into the machine, please feed more or choose another item");
                             secondCheckBool = false;
                         }
+                        else if (kvp.Value == 0)
+                        {
+                            Console.WriteLine("this item is SOLD OUT");
+                        }
                     }
-                    else if (counter == dummyDictionary.Count)
+                    else if (counter == dummyDictionary.Count && kvp.Value != 0)
                     {
                         Console.WriteLine($"Sorry, there is not an item with slot {itemKey}");
                         secondCheckBool = false;

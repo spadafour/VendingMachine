@@ -25,6 +25,18 @@ namespace CapstoneTests.ReadersAndLoggersTests
             
             string expected = $"FEED MONEY: {moneyFed:C2} {vendBalance:C2}";
             Assert.AreEqual(expected, result);
+
+
+        }
+        [TestMethod]
+        public void LogItemVended()
+        {
+
+        }
+        [TestMethod]
+        public void LogChangeMade()
+        {
+
         }
     }
 }

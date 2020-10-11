@@ -1,4 +1,5 @@
 ﻿using Capstone.Classes.Menus;
+using Capstone.Classes.ReadersAndLoggers;
 using Capstone.Classes.VendItems;
 using System;
 using System.Collections;
@@ -16,15 +17,9 @@ namespace Capstone.Classes
         public decimal Balance { get; private set; } = 0;
         private Dictionary<VendItem, int> VendItemInventory { get; set; } = new Dictionary<VendItem, int>();
         //TODO Add public string[] BillReader as holder for bills to recognize
-        //TODO Maybe Generate Coin Purse Here? Just an array that holds possible coins? public Coin[] coinTypes
-
 
         //Methods
-        public decimal GetBalance() //Returns Balance as decimal
-        {
-            return Balance;
-        }
-
+       
         public bool AddItemToInventory(VendItem item, int startingStock) //Adds VendItem object, startingStock int to VendItemInventory dictionary
         {//Add some if statements to catch if int startingStock is negative, or maybe something to account for int.max??
             VendItemInventory.Add(item, startingStock);
@@ -41,7 +36,7 @@ namespace Capstone.Classes
             Balance += moneyFed;
         }
 
-        public void VendSelectedItem(string itemKey) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
+        public void VendSelectedItem(string itemKey, AuditLogger auditor) //VendItem.Quantity--; balance-=VendItem.Price; ConsoleWriteLine VendItem.Name, .Price, Balance, Message(might need if statements for msg?)
             //TODO Clean up method VendSelectedItem() / move some code to submenu
             //TODO Add Audit to Vended Item (Don't forget to grab the pre-transaction balance too)
         {
@@ -75,6 +70,7 @@ namespace Capstone.Classes
                                     VendItemInventory[kvp.Key] = kvp.Value - 1;
                                     Console.WriteLine(kvp.Key.Message);
                                     Console.WriteLine();
+                                    auditor.LogItemVended(kvp.Key, Balance);
                                     secondCheckBool = false;
                                 }
                                 else

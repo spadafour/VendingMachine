@@ -28,15 +28,18 @@ namespace Capstone.Classes.Menus
                 switch (userSelection)
                 {
                     case '1': //Yes
-                        Console.WriteLine("Dispensing Change:");
-                        Auditor.HoldBalance(Vendomatic.GetBalance());
-                        Dictionary<string, int> coinPurse = Vendomatic.MakeChange();
-                        Auditor.LogChangeMade(Vendomatic.GetBalance());
-                        foreach (string coin in coinPurse.Keys)
+                        if (Vendomatic.Balance > 0)
                         {
-                            Console.WriteLine($"{coin}: {coinPurse[coin]}");
+                            Console.WriteLine("Dispensing Change:");
+                            Auditor.HoldBalance(Vendomatic.Balance);
+                            Dictionary<string, int> coinPurse = Vendomatic.MakeChange();
+                            Auditor.LogChangeMade(Vendomatic.Balance);
+                            foreach (string coin in coinPurse.Keys)
+                            {
+                                Console.WriteLine($"{coin}: {coinPurse[coin]}");
+                            }
                         }
-                        Console.WriteLine("\n" + "Vendo-Matic Balance: " + Vendomatic.GetBalance() + "\n");
+                        Console.WriteLine("\n" + "Vendo-Matic Balance: " + Vendomatic.Balance + "\n");
                         userSelection = '0'; answeredYOrN = true; shouldExit = true; break;
                     case '2': //No
                         Console.WriteLine("Returning to Main Menu");

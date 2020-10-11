@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 
 namespace Capstone.Classes.ReadersAndLoggers
@@ -31,7 +32,7 @@ namespace Capstone.Classes.ReadersAndLoggers
             AuditLog.Enqueue($"{TimeStamp} {vendItem.ItemName} {vendItem.SlotNumber} {PreBalanceHold:C2} {vendBalance:C2}");
             return true;
         }
-        
+
         public bool LogChangeMade(decimal vendBalance)
         {
             TimeStamp = DateTime.Now.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
@@ -43,5 +44,20 @@ namespace Capstone.Classes.ReadersAndLoggers
         {
             return AuditLog;
         }
-    }//TODO Add Method to Write to external file
+
+        public void AuditWriter()
+        {
+            string directory = Environment.CurrentDirectory;
+            string file = "AuditLog.txt";
+            string fullPath = Path.Combine(directory, file);
+            using (StreamWriter sw = new StreamWriter(fullPath, true))
+            {
+                int countHolder = AuditLog.Count;
+                for (int i = 0; i < countHolder; i++)
+                {
+                    sw.WriteLine(AuditLog.Dequeue());
+                }
+            }
+        }
+    }
 }

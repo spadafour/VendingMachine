@@ -37,16 +37,16 @@ namespace Capstone.Classes.Menus
                     }
 
                     Vendomatic.FeedMoney(moneyFed);
-                    Auditor.LogMoneyIn(moneyFed, Vendomatic.GetBalance());//rspadafore: added line to audit moneyFed
+                    Auditor.LogMoneyIn(moneyFed, Vendomatic.Balance);//rspadafore: added line to audit moneyFed
                     Console.WriteLine($"The vending maching balance is {Vendomatic.Balance}");
-                    Console.Write("Type N to stop feeding money to the machine, or any other key to continue feeding money ");
+                    Console.Write("Type Y to continue feeding money or any other key to stop feeding money");
                     Char feedMoneyYorN = Console.ReadKey().KeyChar;
                     Console.WriteLine();
-                    if (feedMoneyYorN == 'N' || feedMoneyYorN == 'n')
+                    if (feedMoneyYorN == 'Y' || feedMoneyYorN == 'y')
                     {
-                        continueToFeed = false;
-
+                        continueToFeed = true;
                     }
+                    else continueToFeed = false;
                 }
                 catch (Exception e)
                 {

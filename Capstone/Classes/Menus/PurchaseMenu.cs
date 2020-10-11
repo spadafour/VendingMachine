@@ -41,21 +41,15 @@ namespace Capstone.Classes.Menus
                         menu.GoTo();
                         break;
                     case '2':
-                        Console.WriteLine("Please select an item number from the following list of products");
-                        Console.WriteLine($"A balance of {Vendomatic.Balance} remains in the vending machine");
-                        //rspadafore: Changed how to access Display Items Menu
-                        menu = new DisplayItemsMenu(Vendomatic);
+                        menu = new SelectProductMenu(Vendomatic, Auditor);
                         menu.GoTo();
-                        Console.WriteLine("Now input the key of the item you would like to purchase, or press X to return to purchase menu");
-                        string itemKey = Console.ReadLine();
-                        Vendomatic.VendSelectedItem(itemKey);
                         break;
-
-                    case '3': //Access Finish Transaction Menu
-                        //rspadafore: Changed how to access Finish Transaction Menu
+                    case '3':
                         menu = new FinishTransactionMenu(Vendomatic, Auditor);
-                        menu.GoTo();
-                        userSelection = '0'; isOption = true; break;
+
+                        isOption = menu.GoTo();
+                        Auditor.AuditWriter();
+                        break;
                     default:
                         Console.WriteLine("A number other than 1, 2, or 3, was entered. Please enter a new number");
                         Console.WriteLine("(1) Display Vending Machine Items");
@@ -64,7 +58,7 @@ namespace Capstone.Classes.Menus
                         Console.Write("Selection: ");
                         userSelection = Console.ReadKey().KeyChar;
                         Console.WriteLine(System.Environment.NewLine);
-                        isOption = false; break;
+                        break;
                 }
             }
             while (!isOption);

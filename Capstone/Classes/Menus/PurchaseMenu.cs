@@ -35,20 +35,23 @@ namespace Capstone.Classes.Menus
                 switch (userSelection)
                 {
                     case '1':
+                        userSelection = '0';
                         menu = new FeedMoneyMenu(Vendomatic, Auditor);
                         menu.GoTo();
                         break;
                     case '2':
+                        userSelection = '0';
                         menu = new SelectProductMenu(Vendomatic, Auditor);
                         menu.GoTo();
                         break;
                     case '3':
+                        userSelection = '0';
                         menu = new FinishTransactionMenu(Vendomatic, Auditor);
                         shouldReturnToMain = menu.GoTo();
                         Auditor.AuditWriter();
                         break;
                     default:
-                        Console.WriteLine("A number other than 1, 2, or 3, was entered. Please enter a new number");
+                        Console.WriteLine("Purchase Menu");
                         Console.WriteLine("(1) Feed Money");
                         Console.WriteLine("(2) Select Product");
                         Console.WriteLine("(3) Finish Transaction");

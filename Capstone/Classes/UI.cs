@@ -41,6 +41,10 @@ namespace Capstone.Classes
                         menu = new ExitMenu();
                         keepRunning = menu.GoTo();
                         userSelection = '0'; break;
+                    case '4': //Generate Sales Report
+                        Auditor.SalesReportWriter();
+                        Console.WriteLine("Sales Report Generated\n");
+                        userSelection = '0';  keepRunning = true; break;
                     default:
                         menu = new MainMenu();
                         menu.GoTo();
@@ -50,7 +54,6 @@ namespace Capstone.Classes
                 }
             }
             while (keepRunning);
-
             Console.WriteLine("Thank you! Come again!");
             return true;
         }

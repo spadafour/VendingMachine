@@ -10,6 +10,7 @@ namespace Capstone.Classes.ReadersAndLoggers
     public class AuditLogger
     {
         private Queue<string> AuditLog { get; set; } = new Queue<string>();
+        private Dictionary<string, int> SalesReport { get; set; } = new Dictionary<string, int>();
         private decimal PreBalanceHold { get; set; }
         private string TimeStamp { get; set; }
 
@@ -26,10 +27,21 @@ namespace Capstone.Classes.ReadersAndLoggers
             return true;
         }
 
-        public bool LogItemVended(VendItem vendItem, decimal vendBalance)
+        public bool LogItemVended(VendItem itemVended, decimal vendBalance)
         {
+            //For AuditLog
             TimeStamp = DateTime.Now.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
-            AuditLog.Enqueue($"{TimeStamp} {vendItem.ItemName} {vendItem.SlotNumber} {PreBalanceHold:C2} {vendBalance:C2}");
+            AuditLog.Enqueue($"{TimeStamp} {itemVended.ItemName} {itemVended.SlotNumber} {PreBalanceHold:C2} {vendBalance:C2}");
+
+            //For Sales Report
+            if (SalesReport.ContainsKey(itemVended.ItemName))
+            {
+                SalesReport[itemVended.ItemName]++;
+            }
+            else
+            {
+                SalesReport.Add(itemVended.ItemName, 1);
+            }
             return true;
         }
 
@@ -50,14 +62,46 @@ namespace Capstone.Classes.ReadersAndLoggers
             string directory = Environment.CurrentDirectory;
             string file = "AuditLog.txt";
             string fullPath = Path.Combine(directory, file);
-            using (StreamWriter sw = new StreamWriter(fullPath, true))
+            try
             {
-                int countHolder = AuditLog.Count;
-                for (int i = 0; i < countHolder; i++)
+                using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
-                    sw.WriteLine(AuditLog.Dequeue());
+                    int countHolder = AuditLog.Count;
+                    for (int i = 0; i < countHolder; i++)
+                    {
+                        sw.WriteLine(AuditLog.Dequeue());
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while writing to Audit File: ");
+                Console.WriteLine(e.Message);
+            }
+            
+        }
+
+        public bool SalesReportWriter()
+        {
+            string directory = Environment.CurrentDirectory;
+            string file = $"SalesReport_{DateTime.Now.ToString("MM-dd-yyyy-HH.mm.ss")}.txt";
+            string fullPath = Path.Combine(directory, file);
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(fullPath, true))
+                {
+                    foreach (KeyValuePair<string, int> salesOfProd in SalesReport)
+                    {
+                        sw.WriteLine($"{salesOfProd.Key}|{salesOfProd.Value}");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while writing to Sales Report: ");
+                Console.WriteLine(e.Message);
+            }
+            return true;
         }
     }
 }

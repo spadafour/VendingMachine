@@ -1,4 +1,6 @@
 ﻿using Capstone.Classes.ReadersAndLoggers;
+using Capstone.Classes.VendItems;
+using Capstone.Classes.VendItems.VendItemTypes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,15 +18,51 @@ namespace Capstone.Classes.Menus
         }
         public bool GoTo()
         {
-            Console.WriteLine("Please select an item number from the following list of products");
-            Console.WriteLine($"A balance of {Vendomatic.Balance} remains in the vending machine");
-            //rspadafore: Changed how to access Display Items Menu
+            Console.WriteLine($"Balance: {Vendomatic.Balance}");
             DisplayItemsMenu displayItemsMenu = new DisplayItemsMenu(Vendomatic);
             displayItemsMenu.GoTo();
-            Console.WriteLine("Now input the key of the item you would like to purchase, or press X to return to purchase menu");
-            string itemKey = Console.ReadLine();
-            Auditor.HoldBalance(Vendomatic.Balance);
-            Vendomatic.VendSelectedItem(itemKey, Auditor);
+            string itemSelect;
+            Console.Write("Please select an item number[Letter and Number]: ");
+            itemSelect = Console.ReadLine().ToLower();
+
+            bool pickedValidKey = false;
+            VendItem validVendKey = new Chip("", "", 0);
+            foreach (VendItem vendItem in Vendomatic.GetVendItemInventory().Keys)
+            {
+                if (vendItem.SlotNumber.ToLower() == itemSelect && Vendomatic.GetVendItemInventory()[vendItem] > 0)
+                {
+                    pickedValidKey = true;
+                    validVendKey = vendItem;
+                    
+                }
+                else if (vendItem.SlotNumber.ToLower() == itemSelect && Vendomatic.GetVendItemInventory()[vendItem] == 0)
+                {
+                    pickedValidKey = true;
+                    validVendKey = vendItem;
+                }
+            }
+
+            if (pickedValidKey && Vendomatic.GetVendItemInventory()[validVendKey] == 0)
+            {
+                Console.WriteLine("Sorry, that item is SOLD OUT.");
+            }
+            else if (pickedValidKey && Vendomatic.GetVendItemInventory()[validVendKey] > 0 && Vendomatic.Balance < validVendKey.Price)
+            {
+                Console.WriteLine("Sorry, not enough Money to vend.\n");
+            }
+            else if (pickedValidKey && Vendomatic.GetVendItemInventory()[validVendKey] > 0 && Vendomatic.Balance >= validVendKey.Price)
+            {
+                Auditor.HoldBalance(Vendomatic.Balance);
+                Vendomatic.VendSelectedItem(validVendKey);
+                Auditor.LogItemVended(validVendKey, Vendomatic.Balance);
+                Console.WriteLine($"Dispensing {validVendKey.ItemName} ({validVendKey.Price:C2}) - Remaining Balance: {Vendomatic.Balance:C2}");
+                Console.WriteLine(validVendKey.Message + "\n");
+            }
+            else
+            {
+                Console.WriteLine("Invalid Selection.\n");
+            }
+
             return true;
         }
     }

@@ -67,6 +67,7 @@ namespace Capstone.Classes.Menus
                 }
             }
             while (continueToFeed);
+            Console.WriteLine();
             return true;
         }
     }

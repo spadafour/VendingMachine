@@ -18,12 +18,12 @@ namespace Capstone.Classes.Menus
         {
             foreach (KeyValuePair <VendItem, int> item in Vendomatic.GetVendItemInventory())
             {
-                string printItemLine = $"{item.Key.SlotNumber}. {item.Key.ItemName} - {item.Key.Price:C} - {Vendomatic.GetVendItemInventory()[item.Key]}";
+                string printItemLine = $"{item.Key.SlotNumber}. {item.Key.ItemName} - {item.Key.Price:C} - ";
                 if (item.Value == 0)
                 {
-                    Console.WriteLine(printItemLine + " - SOLD OUT");
+                    Console.WriteLine(printItemLine + "SOLD OUT");
                 }
-                else Console.WriteLine(printItemLine);
+                else Console.WriteLine(printItemLine + Vendomatic.GetVendItemInventory()[item.Key]);
             }
             Console.WriteLine();
             return true;

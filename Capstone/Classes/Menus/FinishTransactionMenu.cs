@@ -38,11 +38,10 @@ namespace Capstone.Classes.Menus
                             {
                                 Console.WriteLine($"{coin}: {coinPurse[coin]}");
                             }
+                            Console.WriteLine();
                         }
-                        Console.WriteLine("\n" + "Vendo-Matic Balance: " + Vendomatic.Balance + "\n");
                         userSelection = '0'; answeredYOrN = true; shouldExit = true; break;
                     case '2': //No
-                        Console.WriteLine("Returning to Main Menu");
                         userSelection = '0'; answeredYOrN = true; shouldExit = false; break;
                     default:
                         Console.Write("Finish transaction and dispense change? 1=Yes / 2=No : ");

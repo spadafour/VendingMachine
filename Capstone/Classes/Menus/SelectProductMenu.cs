@@ -26,6 +26,7 @@ namespace Capstone.Classes.Menus
             itemSelect = Console.ReadLine().ToLower();
 
             bool pickedValidKey = false;
+            bool isSoldOut = false;
             VendItem validVendKey = new Chip("", "", 0);
             foreach (VendItem vendItem in Vendomatic.GetVendItemInventory().Keys)
             {
@@ -39,18 +40,19 @@ namespace Capstone.Classes.Menus
                 {
                     pickedValidKey = true;
                     validVendKey = vendItem;
+                    isSoldOut = true;
                 }
             }
 
-            if (pickedValidKey && Vendomatic.GetVendItemInventory()[validVendKey] == 0)
+            if (pickedValidKey && isSoldOut)
             {
-                Console.WriteLine("Sorry, that item is SOLD OUT.");
+                Console.WriteLine("Sorry, that item is SOLD OUT.\n");
             }
-            else if (pickedValidKey && Vendomatic.GetVendItemInventory()[validVendKey] > 0 && Vendomatic.Balance < validVendKey.Price)
+            else if (pickedValidKey && (!isSoldOut) && Vendomatic.Balance < validVendKey.Price)
             {
                 Console.WriteLine("Sorry, not enough Money to vend.\n");
             }
-            else if (pickedValidKey && Vendomatic.GetVendItemInventory()[validVendKey] > 0 && Vendomatic.Balance >= validVendKey.Price)
+            else if (pickedValidKey && (!isSoldOut) && Vendomatic.Balance >= validVendKey.Price)
             {
                 Auditor.HoldBalance(Vendomatic.Balance);
                 Vendomatic.VendSelectedItem(validVendKey);
